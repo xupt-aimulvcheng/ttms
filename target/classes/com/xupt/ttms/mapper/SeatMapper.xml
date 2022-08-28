@@ -16,6 +16,14 @@
         from seat
         where studio_id = #{studioId};
     </select>
+    <select id="getId" resultType="integer">
+        select id from seat
+        <where>
+                seat_column = #{seat.col}
+                and seat_row = #{seat.row}
+                and studio_id = #{seat.studioId}
+        </where>
+    </select>
 <!--    批量修改座位-->
     <update id="updateSeats">
         <foreach collection="seats" item="seat" separator=";">
@@ -23,6 +31,12 @@
         where seat_column = #{seat.col}
         and seat_row = #{seat.row}
         and studio_id = #{seat.studioId}
+        </foreach>
+    </update>
+    <update id="updateTicket">
+        <foreach collection="seats" item="seat" separator=";">
+            update ticket set ticket_status = #{seat.status}
+            where seat_id = #{seat.id}
         </foreach>
     </update>
 </mapper>

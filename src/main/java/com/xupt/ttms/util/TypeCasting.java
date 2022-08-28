@@ -2,12 +2,14 @@ package com.xupt.ttms.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class TypeCasting {
     public static LocalDateTime formatStringToLocalDateTime(String date) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDateTime.parse(date,dtf);
+        return LocalDateTime.parse(date, dtf);
     }
+
     //1.LocalDateTime转为"yyyy/MM/dd"
     public static String formatLocalDateTimeString1(LocalDateTime date) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -21,12 +23,26 @@ public class TypeCasting {
     }
 
     //3.将"yyyy-MM-dd HH:mm:ss"转化为"yyyy-MM-dd HH:mm"
-    public static String formatStringToString(String date){
+    public static String formatStringToString(String date) {
         String result = "";
         char[] chars = date.toCharArray();
-        for (int i = 0; i < chars.length-3; i++) {
+        for (int i = 0; i < chars.length - 3; i++) {
             result += chars[i];
         }
         return result;
+    }
+    //将list集合转为字符串
+    public static <T> String ListToStr(List<T> list) {
+        StringBuffer sb = new StringBuffer();
+        if (!list.isEmpty()) {
+            for (int i = 0; i <= list.size() - 1; i++) {
+                if (i < list.size() - 1) {
+                    sb.append(list.get(i) + ",");
+                } else {
+                    sb.append(list.get(i));
+                }
+            }
+        }
+        return sb.toString();
     }
 }

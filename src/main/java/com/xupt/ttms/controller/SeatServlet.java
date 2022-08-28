@@ -15,15 +15,21 @@ import java.util.List;
 public class SeatServlet {
     @Autowired
     private SeatService seatService;
+
     @RequestMapping(value = "/seat/getSeats", method = RequestMethod.POST)
     @ResponseBody
-    public List<Seat> getSeats(){
+    public List<Seat> getSeats() {
         return seatService.getSeatList(19);
     }
-    @RequestMapping(value = "/seat/updateSeats" , method = RequestMethod.POST)
+
+    @RequestMapping(value = "/seat/updateSeats", method = RequestMethod.POST)
     @ResponseBody
-    public String updateSeats(@RequestBody List<Seat> seats){
-        int i = seatService.updateSeats(seats);
-        return (i == seats.size()?"修改失败":"修改成功");
+    public String updateSeats(@RequestBody List<Seat> seats) {
+        try {
+            int i = seatService.updateSeats(seats);
+            return "修改成功";
+        } catch(Exception e) {
+            return "修改失败";
+        }
     }
 }
