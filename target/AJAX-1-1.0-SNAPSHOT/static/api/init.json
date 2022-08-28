@@ -1,0 +1,67 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "/hall/index"
+  },
+  "logoInfo": {
+    "title": "开心影院后台管理",
+    "image": "../layuimini/images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "影院管理",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "演出厅管理",
+              "href": "/hall/index",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "剧目管理",
+              "href": "/movie/index",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "演出计划管理",
+              "href": "/plan/index",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "座位管理",
+              "href": "/seat/index",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "统计管理",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "票房统计",
+              "href": "page/sales/index.html",
+              "icon": "fa fa-hourglass-end",
+              "target": "_self"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xupt.ttms.mapper.SeatMapper">
+    <resultMap id="BaseResultMap" type="com.xupt.ttms.pojo.Seat">
+        <id property="id" column="id"></id>
+        <result property="col" column="seat_column"></result>
+        <result property="row" column="seat_row"></result>
+        <result property="status" column="seat_status"></result>
+        <result property="studioId" column="studio_id"></result>
+    </resultMap>
+    <select id="getSeatList" resultMap="BaseResultMap">
+        select id, seat_column, seat_row, seat_status
+        from seat
+        where studio_id = #{studioId};
+    </select>
+</mapper>

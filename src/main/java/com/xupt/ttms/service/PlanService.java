@@ -1,0 +1,19 @@
+package com.xupt.ttms.service;
+
+import com.github.pagehelper.PageInfo;
+import com.xupt.ttms.pojo.Plan;
+
+import java.util.List;
+
+public interface PlanService {
+    PageInfo<Plan> getAllPlansBymID(String mId, int parseInt, int parseInt1);
+    public String getEndTime(String mId, String startTime);
+    public int insertPlan(Plan plan);
+    public int updatePlan(Plan plan);
+    public int deletePlanByIds(String ids);
+    public Integer getHallIDByName(String name);
+    public int getMovieIDByName(String name);
+    Double getPriceBymId(Integer id);
+
+    List<Plan> getPlanByName(String getpName);
+}

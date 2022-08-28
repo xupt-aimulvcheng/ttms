@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>汉唐剧院管理系统-选座订票</title>
+    <link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/slick.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/slicknav.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/animate.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/seats.css}"/>
+    <style type="text/css">
+        .demo {
+            width: 800px;
+            margin: 40px auto 0 20px;
+            min-height: 450px;
+        }
+
+        @media screen and (max-width: 360px) {
+            .demo {
+                width: 340px
+            }
+        }
+
+        .front {
+            width: 200px;
+            margin: 5px 32px 45px 60px;
+            background-color: #f0f0f0;
+            color: #666;
+            text-align: center;
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        .booking-details {
+            margin-top: 35px;
+            float: right;
+            position: relative;
+            width: 220px;
+            height: 450px;
+        }
+
+        .booking-details h3 {
+            margin: 5px 5px 0 0;
+            font-size: 16px;
+        }
+
+        .booking-details p {
+            line-height: 26px;
+            font-size: 16px;
+            color: #999
+        }
+
+        .booking-details p span {
+            color: #666
+        }
+
+        div.seatCharts-cell {
+            color: #182C4E;
+            height: 25px;
+            width: 25px;
+            line-height: 25px;
+            margin: 3px;
+            float: left;
+            text-align: center;
+            outline: none;
+            font-size: 13px;
+        }
+
+        div.seatCharts-seat {
+            color: #fff;
+            cursor: pointer;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        div.seatCharts-row {
+            height: 35px;
+        }
+
+        div.seatCharts-seat.available {
+            background-color: #B9DEA0;
+        }
+
+        div.seatCharts-seat.focused {
+            background-color: #76B474;
+            border: none;
+        }
+
+        div.seatCharts-seat.selected {
+            /*background-color: #B9DEA0;*/
+        }
+
+        div.seatCharts-seat.unavailable {
+            background-color: #472B34;
+            /*cursor: not-allowed;*/
+        }
+
+        div.seatCharts-container {
+            border-right: 1px dotted #adadad;
+            width: 550px;
+            padding: 20px;
+            float: left;
+        }
+
+        div.seatCharts-legend {
+            padding-left: 0px;
+            position: absolute;
+            bottom: 16px;
+        }
+
+        ul.seatCharts-legendList {
+            padding-left: 0px;
+        }
+
+        .seatCharts-legendItem {
+            float: left;
+            width: 90px;
+            margin-top: 10px;
+            line-height: 2;
+        }
+
+        span.seatCharts-legendDescription {
+            margin-left: 5px;
+            line-height: 30px;
+        }
+
+        .checkout-button {
+            display: block;
+            width: 80px;
+            height: 24px;
+            line-height: 20px;
+            margin: 10px auto;
+            border: 1px solid #999;
+            font-size: 14px;
+            cursor: pointer
+        }
+
+        #selected-seats {
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: none;
+            width: 200px;
+        }
+
+        #selected-seats li {
+            float: left;
+            width: 72px;
+            height: 28px;
+            line-height: 28px;
+            border: 1px solid #d3d3d3;
+            background: #5cb85c;
+            margin: 6px;
+            font-size: 14px;
+            text-align: center;
+            color: white
+        }
+    </style>
+</head>
+<body class="contact-template">
+<div class="main-page clearfix">
+    <div class="container">
+        <div class="row">
+            <!--座位布局-->
+            <div id="main">
+                <h2 class="top_title">在线选座订座</h2>
+                <div class="demo">
+                    <div id="seat-map">
+                        <div class="front">银幕中央</div>
+                    </div>
+                    <div class="booking-details">
+                        <p>演出厅：<span id="studioname">VIP厅</span></p>
+                        <p>已选座位：</p>
+                        <ul id="selected-seats"></ul>
+                        <br>
+                        <div style="line-height: 26px;
+    font-size: 16px;
+    color: #999;">已损坏</div>
+                        <div style="background-color: #472B34;height: 25px;
+    width: 25px;
+    line-height: 25px;
+    margin: 3px;
+    text-align: center;
+    outline: none;"></div>
+                        <br>
+                        <div style="line-height: 26px;
+    font-size: 16px;
+    color: #999;">完好</div>
+                        <div style="background-color: #76B474;height: 25px;
+    width: 25px;
+    line-height: 25px;
+    margin: 3px;
+    float: left;
+    text-align: center;
+    outline: none;"></div>
+                        <div style="background-color: #B9DEA0;height: 25px;
+    width: 25px;
+    line-height: 25px;
+    margin: 3px;
+    float: left;
+    text-align: center;
+    outline: none;"></div>
+                        <br>
+                        <br><br>
+                        <button type="button" class="btn btn-danger" style="margin-left: 80px;" id="submit">修改</button>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
+<script th:src="@{/static/js/jquery-2.1.3.min.js}"></script>
+<script th:src="@{/static/js/jquery-ui.min.js}"></script>
+<script th:src="@{/static/js/jquery.form.min.js}"></script>
+<script th:src="@{/static/js/jquery.validate.min.js}"></script>
+<script th:src="@{/static/js/axios.min.js}"></script>
+<script th:src="@{/static/js/seat.js}"></script>
+<script type="text/javascript">
+    var seatStr = [];
+
+    function getString(row, col, json) {
+        var seatArr = [];
+        var badArray = [];
+        var str = "";
+        var badStr = "";
+        for (var i = 1; i <= row; i++) {
+            for (var j = 1; j <= col; j++) {
+                for (var k = 0; k < json.length; k++) {
+                    if (json[k].status == 1 && json[k].row == i && json[k].col == j) {
+                        str += "a";
+                    } else if (json[k].status == 2 && json[k].row == i && json[k].col == j) {
+                        str += "b";
+                    } else if (json[k].status == 0 && json[k].row == i && json[k].col == j) {
+                        badStr += "'" + i + "_" + j + "'";
+                        badArray.push(badStr);
+                        badStr = "";
+                        str += "a";
+                    }
+                }
+            }
+            seatArr.push(str);
+            str = "";
+        }
+        return seatArr;
+    }
+
+    function getBadString(row, col, json) {
+        var seatArr = [];
+        var badArray = [];
+        var str = "";
+        var badStr = "";
+        for (var i = 1; i <= row; i++) {
+            for (var j = 1; j <= col; j++) {
+                for (var k = 0; k < json.length; k++) {
+                    if (json[k].status == 1 && json[k].row == i && json[k].col == j) {
+                        str += "a";
+                    } else if (json[k].status == 2 && json[k].row == i && json[k].col == j) {
+                        str += "b";
+                    } else if (json[k].status == 0 && json[k].row == i && json[k].col == j) {
+                        str += "a";
+                        badStr += i + "_" + j;
+                        badArray.push(badStr);
+                        badStr = "";
+                    }
+                }
+            }
+            seatArr.push(str);
+            if (badStr.length > 0) {
+                badArray.push(badStr);
+            }
+            badStr = "";
+            str = "";
+        }
+        return badArray;
+    }
+
+    $(function () {
+        axios.post(
+            "/seat/getSeats"
+        ).then(function (response) {
+            var json = response.data;
+            var len = json.length;
+            var rowSet = new Array(len);
+            var colSet = new Array(len);
+            for (var i = 0; i < len; i++) {
+                rowSet.push(json[i].row);
+                colSet.push(json[i].col);
+            }
+            var rowlen = rowSet.pop();
+            var collen = colSet.pop();
+            seatStr = getString(rowlen, collen, json);
+            var badArr = getBadString(rowlen, collen, json);
+            console.log(seatStr);
+            createSeat(seatStr, badArr);
+        })
+    })
+    console.log();
+    // 此处为示例，具体请自行完成
+    var price = 35; //票价
+    function createSeat(seatStr, badArr) {
+        $(document).ready(function () {
+            var $cart = $('#selected-seats'), //座位区
+                $counter = $('#counter'), //票数
+                $total = $('#total'); //总计金额
+            var sc = $('#seat-map').seatCharts({
+                //座位图
+                map: seatStr,
+                naming: {
+                    top: false,
+                    getLabel: function (character, row, column) {
+                        return column;
+                    }
+                },
+                legend: { //定义图例
+                    node: $('#legend'),
+                    items: [
+                        ['a', 'available', '可选座'],
+                        ['b', 'unavailable', '已损坏']
+                    ]
+                },
+                click: function () { //点击事件
+                    if (this.status() == 'available') { //可选座
+                        var str = "";
+                        var id ='#'+this.node().attr('id');
+                        if (this.node().css('background-color') == 'rgb(118, 180, 116)') {
+                            str= "";
+                            str += "unavailable0";
+                            $(id).css('background-color','rgb(71, 43, 52)');
+                        }
+                        else if (this.node().css('background-color') == 'rgb(71, 43, 52)') {
+                            $(id).css('background-color', 'rgb(118, 180, 116)');
+                            str= "";
+                            str += "available0";
+                            // console.log(this.node().css('background-color') == 'rgb(71, 43, 52)')
+                        }
+                        $('<li>' + (this.settings.row + 1) + '排' + this.settings.label + '座</li>')
+                            .attr('id', 'cart-item-' + this.settings.id)
+                            .attr('row', this.settings.row + 1)
+                            .attr('selected', 'true')
+                            .attr('col', this.settings.label)
+                            .data('seatId', this.settings.id)
+                            .appendTo($cart);
+                        $counter.text(sc.find('selected').length + 1);
+                        $total.text(recalculateTotal(sc) + price);
+                        return str;
+                    } else if (this.status() == 'available0'||this.status() == 'unavailable0') { //已选中
+                        var id ='#'+this.node().attr('id');
+                        var str = "";
+                        if (this.node().css('background-color') == 'rgb(118, 180, 116)') {
+                            $(id).css('background-color','rgb(71, 43, 52)');
+                            str = '';
+                            str += "unavailable";
+                        }
+                        if (this.node().css('background-color') == 'rgb(71, 43, 52)') {
+                            $(id).css('background-color', 'rgb(118, 180, 116)');
+                            str= "";
+                            str += "available";
+                            // console.log(this.node().css('background-color') == 'rgb(71, 43, 52)')
+                        }
+                        //更新数量
+                        $counter.text(sc.find('selected').length - 1);
+                        //更新总计
+                        $total.text(recalculateTotal(sc) - price);
+                        //删除已预订座位
+                        $('#cart-item-' + this.settings.id).remove();
+                        //可选座
+                        return str;
+                    } else {
+                        return this.style();
+                    }
+                }
+            });
+            console.log(badArr);
+            //已售出的座位
+            $("#submit").click(function () {
+                sc.find('a.selected').each(function (seatId) {
+                    console.log(this.data().row); //display seat data
+                });
+            })
+            sc.get(badArr).node().css({'background-color': '#472B34'});
+        })
+    }
+
+    //计算总金额
+    function recalculateTotal(sc) {
+        var total = 0;
+        sc.find('selected').each(function () {
+            total += price;
+        });
+        return total;
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>汉唐剧院管理系统-选座订票</title>
+    <link rel="stylesheet" th:href="@{/static/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/slick.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/slicknav.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/animate.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/theme.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/seats.css}"/>
+    <script th:src="@{/static/js/jquery-2.1.3.min.js}"></script>
+    <script th:src=" @{/static/js/axios.min.js}"></script>
+</head>
+<body class="contact-template">
+<div class="main-page clearfix">
+    <div class="container">
+        <div class="row">
+            <!--座位布局-->
+            <div id="main">
+                <h2 class="top_title">在线选座订座</h2>
+                <div class="demo">
+                    <div id="seat-map">
+                        <div class="front">银幕中央</div>
+                    </div>
+                    <div class="booking-details">
+                        <p>演出厅：<span id="studioname">VIP厅</span></p>
+                        <p>已选座位：</p>
+                        <ul id="selected-seats"></ul>
+                        <p>票数：<span id="counter" style="color: red">0</span></p>
+                        <p>总计：<b>￥<span id="total" style="color: red">0</span></b></p>
+                        <br>
+                        <button type="button" class="btn btn-danger" id="submit">修改</button>
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var seatStr=[];
+    function getString(row, col, json) {
+        var seatArr = [];
+        for (var i = 0; i < row; i++) {
+            var str = "";
+            for (var j = 0; j < col; j++) {
+                if (json[j].status == 1) {
+                    str += "a";
+                } else if (json[j].status == 2) {
+                    str += "b";
+                } else
+                    str += "u";
+            }
+            seatArr.push(str);
+        }
+        return seatArr;
+    }
+    $(function () {
+        axios.post(
+            "/seat/getSeats"
+        ).then(function (response) {
+            var json = response.data;
+            var len = json.length;
+            var rowSet = new Array(len);
+            var colSet = new Array(len);
+            for (var i = 0; i < len; i++) {
+                rowSet.push(json[i].row);
+                colSet.push(json[i].col);
+            }
+            var rowlen = rowSet.pop();
+            var collen = colSet.pop();
+            seatStr=getString(rowlen, collen, json);
+            console.log(seatStr);
+        })
+    })
+</script>
+</body>
+</html>

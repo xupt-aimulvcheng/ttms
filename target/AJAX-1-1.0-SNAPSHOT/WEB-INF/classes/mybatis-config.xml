@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//MyBatis.org//DTD Config 3.0//EN"
+        "http://MyBatis.org/dtd/MyBatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--将下划线映射为驼峰-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--开启延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--按需加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <typeAliases>
+        <package name="com.xupt.ttms.mapper"/>
+    </typeAliases>
+    <plugins>
+        <!-- 设置分页的插件 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <!-- 配置JDBC事务管理 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源  数据源采用数据库连接池技术  c3p0  druid-->
+            <dataSource type="POOLED">
+                <!-- 数据库相关配置 -->
+                <!-- mysql 8 以上驱动 -->
+                <!--<property name="driver" value="com.mysql.cj.jdbc.Driver"/>-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ttms?serverTimezone=Asia/Shanghai"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+
+        </environment>
+    </environments>
+
+    <!--引入映射文件-->
+    <mappers>
+        <package name="com.xupt.ttms.mapper"/>
+    </mappers>
+</configuration>

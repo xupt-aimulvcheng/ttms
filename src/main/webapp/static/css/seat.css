@@ -1,0 +1,115 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+
+@fdvsdxfcv
+Your account has been flagged.
+Because of that, your profile is hidden from the public. If you believe this is a mistake, contact support to have your account status reviewed.
+mateuszmarkowski
+/
+jQuery-Seat-Charts
+Public
+Code
+Issues
+19
+Pull requests
+3
+Actions
+Projects
+Wiki
+Security
+Insights
+jQuery-Seat-Charts/jquery.seat-charts.css
+@mateuszmarkowski
+mateuszmarkowski Initial commit
+Latest commit 3ecf018 on 8 Nov 2013
+History
+1 contributor
+68 lines (59 sloc)  987 Bytes
+
+div.seatCharts-container {
+    /*min-width: 700px;*/
+}
+div.seatCharts-cell {
+
+    height: 16px;
+    width: 16px;
+    margin: 3px;
+    float: left;
+    text-align: center;
+    outline: none;
+    font-size: 13px;
+    line-height:16px;
+    color: blue;
+
+}
+div.seatCharts-seat {
+    background-color: green;
+    color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor: default;
+}
+div.seatCharts-seat:focus {
+    border: none;
+}
+/*
+.seatCharts-seat:focus {
+	outline: none;
+}
+*/
+
+div.seatCharts-space {
+    background-color: white;
+}
+div.seatCharts-row {
+    height: 50px;
+}
+
+div.seatCharts-row:after {
+    clear: both;
+}
+
+div.seatCharts-seat.selected {
+    background-color: aqua;
+}
+
+div.seatCharts-seat.focused {
+    background-color: #6db131;
+}
+
+div.seatCharts-seat.available {
+    background-color: green;
+}
+
+div.seatCharts-seat.unavailable {
+    background-color: red;
+    cursor: not-allowed;
+}
+
+ul.seatCharts-legendList {
+    list-style: none;
+}
+li.seatCharts-legendItem {
+    margin-top: 10px;
+    line-height: 2;
+}
+Footer
+©2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+You have no unread notifications

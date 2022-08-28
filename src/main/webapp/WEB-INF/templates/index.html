@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script type="text/javascript" th:src="@{/static/layui-v2.6.8/layui/layui.js}"></script>
+    <script th:src=" @{/static/js/jquery-2.1.3.min.js}"></script>
+    <script th:src=" @{/static/js/axios.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/static/layui-v2.6.8/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/login.css}">
+    <script>
+        window.onload = function () {
+            document.getElementById("login-in").onclick = function () {
+                $("#login-in").attr("disabled", "disabled").addClass("layui-btn-disabled");
+                var user = document.getElementById("username").value;
+                var pwd = document.getElementById("password").value;
+                var error = document.getElementById("error");
+                if (user == "") {
+                    $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                    error.innerHTML = "请输入用户名";
+                    return;
+                }
+                if (pwd == "") {
+                    $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                    error.innerHTML = "请输入密码";
+                    return;
+                }
+                axios.post(
+                    "/user/login",
+                    {username: user, password: pwd}
+                ).then(response => {
+                    var data = response.data.info;
+                    console.log(data);
+                    if (data == "用户不存在") {
+                        $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg("用户名不存在", {icon: 2});
+                        });
+                        error.innerHTML = this.responseText;
+                    }
+                    if (data == "密码错误") {
+                        $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                        layui.use('layer', function () {
+                            var layer = layui.layer;
+                            layer.msg("密码错误", {icon: 2});
+                        });
+                        error.innerHTML = this.responseText;
+                    }
+                    if (data == "登陆成功") {
+                        document.cookie = "username=" + document.getElementById("username").value;
+                        $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
+                        // window.location.href = "user/index.html";
+                        window.location.href = "/manage/index";
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        layui.use(['form'], function () {
+            var form = layui.form;
+        })
+    </script>
+
+</head>
+<body>
+<div id="login_box" style="background-color: skyblue;height: 500px;">
+    <h1>开心影院系统</h1>
+    <br>
+    <h2>登录</h2>
+    <form class="layui-login-form">
+        <div class="layui-form-item" style="margin-left: 15px;margin-top: 60px">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" id="username" required lay-verify="required" placeholder="请输入用户名"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 15px;margin-top: 60px">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input id="password" type="password" required lay-verify="required" class="layui-input"
+                       placeholder="请输入密码">
+            </div>
+        </div>
+        <button id="login-in" style="margin-top: 30px;width: 190px;">登录</button>
+        <br>
+        <button type="reset" style="margin-top: 25px;width: 190px;" class="layui-btn layui-btn-warm layui-btn-primary">
+            重置
+        </button>
+    </form>
+    <br>
+    <div style="float: left;margin-left: 20px;margin-top: 20px;"><a href="register.html">注册</a></div>
+    <span id="error" style="margin-top: 20px;display: inline-block;color: #0C0C0C"></span>
+    <div style="float: right;margin-top: 20px;"><a href="forget-pw.html">?忘记密码</a></div>
+</div>
+</body>
+</html>
