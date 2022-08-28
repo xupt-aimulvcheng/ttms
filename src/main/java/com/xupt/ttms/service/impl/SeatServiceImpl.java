@@ -16,4 +16,9 @@ public class SeatServiceImpl implements SeatService {
     public List<Seat> getSeatList(Integer studyId) {
         return seatMapper.getSeatList(studyId);
     }
+
+    @Override
+    public int updateSeats(List<Seat> seats) {
+        return seatMapper.updateSeats(seats);
+    }
 }

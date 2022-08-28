@@ -3,6 +3,7 @@ com\xupt\ttms\pojo\MovieExample$Criterion.class
 com\xupt\ttms\pojo\Page.class
 com\xupt\ttms\mapper\PlanMapper.class
 com\xupt\ttms\mapper\HallMapper.class
+com\xupt\ttms\pojo\Sale.class
 com\xupt\ttms\pojo\User.class
 com\xupt\ttms\pojo\MyLikeExample$GeneratedCriteria.class
 com\xupt\ttms\mapper\SeatMapper.class
@@ -48,6 +49,7 @@ com\xupt\ttms\controller\HallServlet.class
 com\xupt\ttms\mapper\MovieMapper.class
 com\xupt\ttms\service\SeatService.class
 com\xupt\ttms\util\ToResult.class
+com\xupt\ttms\mapper\SaleMapper.class
 com\xupt\ttms\util\TypeCasting.class
 com\xupt\ttms\util\JSONUtil.class
 com\xupt\ttms\mapper\InsiderMapper.class

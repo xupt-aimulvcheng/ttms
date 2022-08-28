@@ -17,6 +17,7 @@ D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\util\WebUtils.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\UserWithBLOBs.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\service\UserService.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\util\JSONUtil.java
+D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\mapper\SaleMapper.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\Action.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\service\impl\HallServiceImpl.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\MyLike.java
@@ -26,6 +27,7 @@ D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\util\SqlSessionUtil.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\mapper\PlanMapper.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\HallExample.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\Page.java
+D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\Sale.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\service\impl\PlanServiceImpl.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\Plan.java
 D:\idea-project\AJAX-1\src\main\java\com\xupt\ttms\pojo\MyLikeExample.java

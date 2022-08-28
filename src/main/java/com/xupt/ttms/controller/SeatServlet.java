@@ -4,6 +4,7 @@ import com.xupt.ttms.pojo.Seat;
 import com.xupt.ttms.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,5 +19,10 @@ public class SeatServlet {
     @ResponseBody
     public List<Seat> getSeats(){
         return seatService.getSeatList(19);
+    }
+    @RequestMapping(value = "/seat/updateSeats" , method = RequestMethod.POST)
+    @ResponseBody
+    public String updateSeats(@RequestBody List<Seat> seats){
+        return (seatService.updateSeats(seats) == seats.size()?"修改成功":"修改失败");
     }
 }

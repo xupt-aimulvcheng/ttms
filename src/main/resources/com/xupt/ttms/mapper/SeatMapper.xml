@@ -16,4 +16,13 @@
         from seat
         where studio_id = #{studioId};
     </select>
+    <update id="updateSeats">
+        update seat set
+        <foreach collection="seats" item="seat">
+            status = #{seat.status}
+        where seat_column = #{seat.col}
+        and seat_row = #{seat.row}
+        and studuo_id = #{seat.studioId}
+        </foreach>
+    </update>
 </mapper>

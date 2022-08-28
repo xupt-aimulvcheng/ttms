@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface SeatMapper {
     public List<Seat> getSeatList(@Param("studioId") Integer studyId);
+
+    int updateSeats(@Param("seats") List<Seat> seats);
 }

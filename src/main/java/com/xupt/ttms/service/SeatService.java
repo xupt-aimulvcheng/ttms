@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface SeatService {
     public List<Seat> getSeatList(Integer studyId);
+
+    int updateSeats(List<Seat> seats);
 }
