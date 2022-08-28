@@ -24,7 +24,6 @@ public class SeatServlet {
     @ResponseBody
     public String updateSeats(@RequestBody List<Seat> seats){
         int i = seatService.updateSeats(seats);
-        System.out.println(""+i+"");
         return (i == seats.size()?"修改失败":"修改成功");
     }
 }
