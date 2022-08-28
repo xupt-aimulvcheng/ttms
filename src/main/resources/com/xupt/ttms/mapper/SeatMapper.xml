@@ -16,13 +16,13 @@
         from seat
         where studio_id = #{studioId};
     </select>
+<!--    批量修改座位-->
     <update id="updateSeats">
-        update seat set
-        <foreach collection="seats" item="seat">
-            status = #{seat.status}
+        <foreach collection="seats" item="seat" separator=";">
+        update seat set seat_status = #{seat.status}
         where seat_column = #{seat.col}
         and seat_row = #{seat.row}
-        and studuo_id = #{seat.studioId}
+        and studio_id = #{seat.studioId}
         </foreach>
     </update>
 </mapper>

@@ -23,6 +23,8 @@ public class SeatServlet {
     @RequestMapping(value = "/seat/updateSeats" , method = RequestMethod.POST)
     @ResponseBody
     public String updateSeats(@RequestBody List<Seat> seats){
-        return (seatService.updateSeats(seats) == seats.size()?"修改成功":"修改失败");
+        int i = seatService.updateSeats(seats);
+        System.out.println(""+i+"");
+        return (i == seats.size()?"修改失败":"修改成功");
     }
 }

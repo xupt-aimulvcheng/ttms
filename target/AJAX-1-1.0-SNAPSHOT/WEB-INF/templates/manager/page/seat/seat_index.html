@@ -236,6 +236,7 @@
 <script th:src="@{/static/js/jquery.validate.min.js}"></script>
 <script th:src="@{/static/js/axios.min.js}"></script>
 <script th:src="@{/static/js/seat.js}"></script>
+<script th:src="@{/layuimini/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
 <script type="text/javascript">
     var seatStr = [];
 
@@ -397,35 +398,61 @@
                     }
                 }
             });
-            console.log(badArr);
-            function hintError(data) {
-                layer.msg(data, {
-                    icon: 1,
-                    time: 1000,
-                    end: function () {
-                        form.val("formTest", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-                            "hName": "", // "name": "value"
-                        });
-                    }
-                });
-                return false;
-            }
-            //已售出的座位
-            $("#submit").click(function () {
-                var data = JSON.stringify(getSeat());
-                console.log(data);
-                var url = '/seat/updateSeats';
-                axios.post(
-                    url,
-                    data
-                ).then(function (response) {
-                    var data = response.data;
-                    if (data == "修改失败")
-                        hintError(data);
-                    else
-                        hint(data);
+            layui.use(['form'], function () {
+                var form = layui.form,
+                    layer = layui.layer,
+                    $ = layui.$;
+                function hintError(data) {
+                    layer.msg(data, {
+                        icon: 1,
+                        time: 1000,
+                        end: function () {
+                            form.val("formTest", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                                "hName": "", // "name": "value"
+                            });
+                        }
+                    });
+                    return false;
+                }
+                function hint(data) {
+                    layer.msg(data, {
+                        icon: 1,
+                        time: 1000,
+                        end: function () {
+                            // parent.refresh();//刷新到表格
+                            // 关闭弹出层
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                        }
+                    });
+                    return false;
+                }
+                $("#submit").click(function () {
+                    var data = JSON.stringify(getSeat());
+                    var url = '/seat/updateSeats';
+                    axios({
+                        // 请求方法
+                        method: 'POST',
+                        // url
+                        url: url,
+                        headers: {
+                            'Content-Type': "application/json;charset=UTF-8"
+                        },
+                        // url参数
+                        // 请求体参数
+                        data: data
+                    }).then(response=>{
+                        var data = response.data;
+                        if (data == "修改失败")
+                            hintError(data);
+                        else
+                            hint(data);
+                    })
                 })
-            })
+            });
+
+            //已售出的座位
+
             // sc.get(badArr).node().css({'background-color': '#472B34'});
             sc.status(badArr, "unavailable");
         })
@@ -470,7 +497,6 @@
         var nodes = $("#selected-seats").children("li");//所有选中的节点
         nodes.each(function (index, node) {
             for (var i = 0; i <= index; i++) {
-                console.log(index)
                 var row = $(node).attr("row");
                 var col = $(node).attr("col");
                 var status = $(node).attr("seat_status");
