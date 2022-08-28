@@ -189,7 +189,8 @@
                         <br>
                         <div style="line-height: 26px;
     font-size: 16px;
-    color: #999;">已损坏</div>
+    color: #999;">已损坏
+                        </div>
                         <div style="background-color: #472B34;height: 25px;
     width: 25px;
     line-height: 25px;
@@ -199,7 +200,8 @@
                         <br>
                         <div style="line-height: 26px;
     font-size: 16px;
-    color: #999;">完好</div>
+    color: #999;">完好
+                        </div>
                         <div style="background-color: #76B474;height: 25px;
     width: 25px;
     line-height: 25px;
@@ -235,6 +237,7 @@
 <script th:src="@{/static/js/seat.js}"></script>
 <script type="text/javascript">
     var seatStr = [];
+
     //获取完好的座位的id
     function getString(row, col, json) {
         var seatArr = [];
@@ -261,6 +264,7 @@
         }
         return seatArr;
     }
+
     //获取损坏的座位的id
     function getBadString(row, col, json) {
         var seatArr = [];
@@ -316,9 +320,10 @@
     // 此处为示例，具体请自行完成
     var price = 35; //票价
     function createSeat(seatStr, badArr, row, col) {
-        var num = new Array(row+1); //表格有10行
-        for(var i = 0;i < num.length; i++){
-            num[i] = new Array(col+1).fill(0); //每行有10列
+        //模拟座位为一个二维数组，每点击一次二维数组的值加1来判断对于选定区域是否去除
+        var num = new Array(row + 1);
+        for (var i = 0; i < num.length; i++) {
+            num[i] = new Array(col + 1).fill(0);
         }
         $(document).ready(function () {
             var $cart = $('#selected-seats'), //座位区
@@ -342,18 +347,16 @@
                 },
                 click: function () { //点击事件
                     var str = "";
-                    var id ='#'+this.node().attr('id');
-                    console.log(this.settings.row);
-                    num[this.settings.row][this.settings.label-1]++;
-                    if (num[this.settings.row][this.settings.label-1] % 2 == 0) {
+                    var id = '#' + this.node().attr('id');
+                    num[this.settings.row][this.settings.label - 1]++;
+                    if (num[this.settings.row][this.settings.label - 1] % 2 == 0) {
                         //更新数量
                         $counter.text(sc.find(str).length - 1);
                         //更新总计
                         $total.text(recalculateTotal(sc) - price);
                         //删除已预订座位
                         $('#cart-item-' + this.settings.id).remove();
-                    }
-                    else if (num[this.settings.row][this.settings.label-1] % 2 != 0){
+                    } else if (num[this.settings.row][this.settings.label - 1] % 2 != 0) {
                         $('<li>' + (this.settings.row + 1) + '排' + this.settings.label + '座</li>')
                             .attr('id', 'cart-item-' + this.settings.id)
                             .attr('row', this.settings.row + 1)
@@ -364,11 +367,10 @@
                         $counter.text(sc.find('selected').length + 1);
                         $total.text(recalculateTotal(sc) + price);
                     }
-                    if (this.status() == 'available')
-                    {
+                    if (this.status() == 'available') {
                         str += "";
                         str += "unavailable"
-                        $(id).css('background-color','rgb(71, 43, 52)');
+                        $(id).css('background-color', 'rgb(71, 43, 52)');
                         return str;
                     }
                     if (this.status() == 'unavailable') {
@@ -442,7 +444,7 @@
                 });
             })
             // sc.get(badArr).node().css({'background-color': '#472B34'});
-            sc.status(badArr,"unavailable");
+            sc.status(badArr, "unavailable");
         })
     }
 
@@ -455,6 +457,12 @@
         return total;
     }
 
+    function getSeat() {
+        var nodes = $("selected-seats").children("li");//所有选中的节点
+        nodes.each(function () {
+            
+        })
+    }
 
 </script>
 </body>
