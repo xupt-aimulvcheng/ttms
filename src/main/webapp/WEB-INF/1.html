@@ -10,37 +10,65 @@
 <script>
     var json = [{"id":1146,"studioId":null,"row":1,"col":1,"status":0},{"id":1147,"studioId":null,"row":1,"col":2,"status":1},{"id":1148,"studioId":null,"row":1,"col":3,"status":1},{"id":1149,"studioId":null,"row":1,"col":4,"status":0},{"id":1150,"studioId":null,"row":1,"col":5,"status":1},{"id":1151,"studioId":null,"row":2,"col":1,"status":1},{"id":1152,"studioId":null,"row":2,"col":2,"status":1},{"id":1153,"studioId":null,"row":2,"col":3,"status":1},{"id":1154,"studioId":null,"row":2,"col":4,"status":1},{"id":1155,"studioId":null,"row":2,"col":5,"status":1},{"id":1156,"studioId":null,"row":3,"col":1,"status":1},{"id":1157,"studioId":null,"row":3,"col":2,"status":1},{"id":1158,"studioId":null,"row":3,"col":3,"status":1},{"id":1159,"studioId":null,"row":3,"col":4,"status":1},{"id":1160,"studioId":null,"row":3,"col":5,"status":1},{"id":1161,"studioId":null,"row":4,"col":1,"status":1},{"id":1162,"studioId":null,"row":4,"col":2,"status":1},{"id":1163,"studioId":null,"row":4,"col":3,"status":1},{"id":1164,"studioId":null,"row":4,"col":4,"status":1},{"id":1165,"studioId":null,"row":4,"col":5,"status":1}]
 
-    function getString(row, col, json) {
-        var seatArr = [];
-        var str = "";
-        for (var i = 1; i <= row; i++) {
-            for (var j = 1; j <= col; j++) {
-                for (var k = 0; k < json.length; k++) {
-                    if (json[k].status == 1 && json[k].row == i && json[k].col == j) {
-                        str += "a";
-                    } else if (json[k].status == 2 && json[k].row == i && json[k].col == j) {
-                        str += "b";
-                    } else if (json[k].status == 0 && json[k].row == i && json[k].col == j)
-                        str += "_";
-                }
+    function getRow(str) {
+        var result = "";
+        for (var i = 0; i < str.length; i++) {
+            if (str[i]!="_"){
+                result+=str[i];
             }
-            seatArr.push(str);
-            str = "";
+            if (str[i] == "_") {
+                break;
+            }
         }
-
-        return seatArr;
+        return parseInt(result);
     }
-
-    var len = json.length;
-    var rowSet = new Array(len);
-    var colSet = new Array(len);
-    for (var i = 0; i < len; i++) {
-        rowSet.push(json[i].row);
-        colSet.push(json[i].col);
+    function getCol(str) {
+        var result = "";
+        var len = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str[i]=="_"){
+                len = i;
+                break;
+            }
+        }
+        for (var i = len+1; i < str.length; i++) {
+            result+=str[i];
+        }
+        return parseInt(result);
     }
-    var rowlen = rowSet.pop();
-    var collen = colSet.pop();
-    seatStr = getString(rowlen, collen, json);
-    console.log(seatStr);
+    console.log(getRow("11_12"));
+    console.log(getCol("11_12"));
+    // function getString(row, col, json) {
+    //     var seatArr = [];
+    //     var str = "";
+    //     for (var i = 1; i <= row; i++) {
+    //         for (var j = 1; j <= col; j++) {
+    //             for (var k = 0; k < json.length; k++) {
+    //                 if (json[k].status == 1 && json[k].row == i && json[k].col == j) {
+    //                     str += "a";
+    //                 } else if (json[k].status == 2 && json[k].row == i && json[k].col == j) {
+    //                     str += "b";
+    //                 } else if (json[k].status == 0 && json[k].row == i && json[k].col == j)
+    //                     str += "_";
+    //             }
+    //         }
+    //         seatArr.push(str);
+    //         str = "";
+    //     }
+    //
+    //     return seatArr;
+    // }
+    //
+    // var len = json.length;
+    // var rowSet = new Array(len);
+    // var colSet = new Array(len);
+    // for (var i = 0; i < len; i++) {
+    //     rowSet.push(json[i].row);
+    //     colSet.push(json[i].col);
+    // }
+    // var rowlen = rowSet.pop();
+    // var collen = colSet.pop();
+    // seatStr = getString(rowlen, collen, json);
+    // console.log(seatStr);
 </script>
 </html>

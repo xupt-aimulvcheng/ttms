@@ -86,16 +86,26 @@
             background-color: #B9DEA0;
         }
 
+        div.seatCharts-seat.available0 {
+            background-color: #B9DEA0;
+            /*background-color: #472B34;*/
+        }
+
         div.seatCharts-seat.focused {
             background-color: #76B474;
             border: none;
         }
 
         div.seatCharts-seat.selected {
-            /*background-color: #B9DEA0;*/
+            background-color: #B9DEA0;
         }
 
         div.seatCharts-seat.unavailable {
+            background-color: #472B34;
+            /*cursor: not-allowed;*/
+        }
+
+        div.seatCharts-seat.unavailable0 {
             background-color: #472B34;
             /*cursor: not-allowed;*/
         }
@@ -225,7 +235,7 @@
 <script th:src="@{/static/js/seat.js}"></script>
 <script type="text/javascript">
     var seatStr = [];
-
+    //获取完好的座位的id
     function getString(row, col, json) {
         var seatArr = [];
         var badArray = [];
@@ -251,7 +261,7 @@
         }
         return seatArr;
     }
-
+    //获取损坏的座位的id
     function getBadString(row, col, json) {
         var seatArr = [];
         var badArray = [];
@@ -298,14 +308,50 @@
             var collen = colSet.pop();
             seatStr = getString(rowlen, collen, json);
             var badArr = getBadString(rowlen, collen, json);
-            console.log(seatStr);
-            createSeat(seatStr, badArr);
+            createSeat(seatStr, badArr, rowlen, collen);
         })
     })
-    console.log();
+    // 根据".._.."的格式获取前面的行数
+    function getRow(str) {
+        var result = "";
+        for (var i = 0; i < str.length; i++) {
+            if (str[i]!="_"){
+                result+=str[i];
+            }
+            if (str[i] == "_") {
+                break;
+            }
+        }
+        return parseInt(result);
+    }
+    function getCol(str) {
+        var result = "";
+        var len = 0;
+        for (var i = 0; i < str.length; i++) {
+            if (str[i]=="_"){
+                len = i;
+                break;
+            }
+        }
+        for (var i = len+1; i < str.length; i++) {
+            result+=str[i];
+        }
+        return parseInt(result);
+    }
+    function getId(str) {
+        var result = "";
+        for (var i = 10; i < str.length; i++) {
+            result+=str[i];
+        }
+        return result;
+    }
     // 此处为示例，具体请自行完成
     var price = 35; //票价
-    function createSeat(seatStr, badArr) {
+    function createSeat(seatStr, badArr, row, col) {
+        var num = new Array(row); //表格有10行
+        for(var i = 0;i < num.length; i++){
+            num[i] = new Array(col).fill(0); //每行有10列
+        }
         $(document).ready(function () {
             var $cart = $('#selected-seats'), //座位区
                 $counter = $('#counter'), //票数
@@ -327,19 +373,63 @@
                     ]
                 },
                 click: function () { //点击事件
-                    if (this.status() == 'available') { //可选座
+                    var str = "";
+                    var address = getId(this.node().attr('id'));
+                    var id ='#'+this.node().attr('id');
+                    var row = getRow(address);
+                    var col = getCol(address)
+                    num[this.settings.row][this.settings.label]++;
+                    if (num[this.settings.row][this.settings.label] % 2 == 0) {
+                        //更新数量
+                        $counter.text(sc.find(str).length - 1);
+                        //更新总计
+                        $total.text(recalculateTotal(sc) - price);
+                        //删除已预订座位
+                        $('#cart-item-' + this.settings.id).remove();
+                    }
+                    else if (num[this.settings.row][this.settings.label] % 2 != 0){
+                        $('<li>' + (this.settings.row + 1) + '排' + this.settings.label + '座</li>')
+                            .attr('id', 'cart-item-' + this.settings.id)
+                            .attr('row', this.settings.row + 1)
+                            .attr('selected', 'true')
+                            .attr('col', this.settings.label)
+                            .data('seatId', this.settings.id)
+                            .appendTo($cart);
+                        $counter.text(sc.find('selected').length + 1);
+                        $total.text(recalculateTotal(sc) + price);
+                    }
+                    if (this.status() == 'available')
+                    {
+                        str += "";
+                        str += "unavailable"
+                        $(id).css('background-color','rgb(71, 43, 52)');
+                        return str;
+                    }
+                    if (this.status() == 'unavailable') {
+                        str += "";
+                        str += "available"
+                        $(id).css('background-color', 'rgb(118, 180, 116)');
+                        return str;
+                    }
+                }
+                /*function () { //点击事件
+                    if (this.status() == 'available'||this.status() == 'unavailable0'||this.status() == 'unavailable') { //可选座
                         var str = "";
                         var id ='#'+this.node().attr('id');
+                        var flag = 0;
+                        /!*var idRemove = "cart-item-"+this.node().attr('id');
+                        $("[id*="+idRemove+"]").remove();
+                        if (this.status() == 'available')
+                            $("[id*="+idRemove+"]").remove();*!/
                         if (this.node().css('background-color') == 'rgb(118, 180, 116)') {
                             str= "";
-                            str += "unavailable0";
+                            str += "selected";
                             $(id).css('background-color','rgb(71, 43, 52)');
                         }
                         else if (this.node().css('background-color') == 'rgb(71, 43, 52)') {
                             $(id).css('background-color', 'rgb(118, 180, 116)');
                             str= "";
-                            str += "available0";
-                            // console.log(this.node().css('background-color') == 'rgb(71, 43, 52)')
+                            str += "selected0";
                         }
                         $('<li>' + (this.settings.row + 1) + '排' + this.settings.label + '座</li>')
                             .attr('id', 'cart-item-' + this.settings.id)
@@ -351,7 +441,7 @@
                         $counter.text(sc.find('selected').length + 1);
                         $total.text(recalculateTotal(sc) + price);
                         return str;
-                    } else if (this.status() == 'available0'||this.status() == 'unavailable0') { //已选中
+                    } else if (this.status() == 'selected'||this.status() == 'selected0'/!*this.status() == 'available0'||this.status() == 'unavailable0'*!/) { //已选中
                         var id ='#'+this.node().attr('id');
                         var str = "";
                         if (this.node().css('background-color') == 'rgb(118, 180, 116)') {
@@ -366,7 +456,7 @@
                             // console.log(this.node().css('background-color') == 'rgb(71, 43, 52)')
                         }
                         //更新数量
-                        $counter.text(sc.find('selected').length - 1);
+                        $counter.text(sc.find(str).length - 1);
                         //更新总计
                         $total.text(recalculateTotal(sc) - price);
                         //删除已预订座位
@@ -376,7 +466,7 @@
                     } else {
                         return this.style();
                     }
-                }
+                }*/
             });
             console.log(badArr);
             //已售出的座位
@@ -385,7 +475,8 @@
                     console.log(this.data().row); //display seat data
                 });
             })
-            sc.get(badArr).node().css({'background-color': '#472B34'});
+            // sc.get(badArr).node().css({'background-color': '#472B34'});
+            sc.status(badArr,"unavailable");
         })
     }
 
