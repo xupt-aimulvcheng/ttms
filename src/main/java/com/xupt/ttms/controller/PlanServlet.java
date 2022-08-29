@@ -32,10 +32,20 @@ public class PlanServlet {
         return result;
     }
 
+    @RequestMapping(value = "/plan/delete/{ids}", method = RequestMethod.POST)
+    @ResponseBody
+    public String deletePlan(@PathVariable String ids){
+        return planService.deletePlan(ids)<=0?"删除失败":"删除成功";
+    }
+
 
     @RequestMapping(value = "/plan/addPlan", method = RequestMethod.POST)
     @ResponseBody
     public String addPlan(@RequestBody Plan plan) {
+        //不在已有的时间内
+        if (!planService.belongCalendar(plan.getStartDate(), String.valueOf(plan.getmId()),plan.gethName())){
+            return "抱歉，设置的时间已有演出计划";
+        }
         if (planService.getHallIDByName(plan.gethName()) == null)
             return "抱歉，无该演出厅,请输入正确的数据";
         if (!planService.getPlanByName(plan.getpName()).isEmpty())

@@ -43,6 +43,9 @@
     <delete id="deletePlanByIds">
         delete from plan where id in (#{ids});
     </delete>
+    <delete id="deletePlan">
+        delete from plan where id in (#{ids})
+    </delete>
     <select id="getAllPlansBymID" resultMap="BaseResultMap">
         select id,p_name,m_id,p_startTime,p_endTime,h_id,
                (select m_name from movie where id = #{mId}) as m_name,
@@ -64,8 +67,8 @@
     <select id="getMovieTimeBymID" resultType="java.lang.Integer">
         select m_length from movie where id = #{mId}
     </select>
-    <select id="getHallIDByName" resultType="java.lang.Integer">
-        select id from hall where h_name = #{name};
+    <select id="getHallIDByName" resultType="Hall">
+        select id,h_name, from hall where h_name = #{name};
     </select>
     <select id="getMovieIDByName" resultType="java.lang.Integer">
         select id from movie where m_name = #{name};
@@ -75,5 +78,8 @@
     </select>
     <select id="getPlanByName" resultType="com.xupt.ttms.pojo.Plan">
         select id from plan where p_name = #{name};
+    </select>
+    <select id="getPlanByhName" resultMap="BaseResultMap">
+        select id,p_name,p_startTime,p_endTime from plan where h_id in (select id from hall where h_name = #{hName}) ;
     </select>
 </mapper>

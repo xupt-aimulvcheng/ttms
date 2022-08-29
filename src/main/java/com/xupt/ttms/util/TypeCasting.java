@@ -1,7 +1,10 @@
 package com.xupt.ttms.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class TypeCasting {
@@ -21,6 +24,11 @@ public class TypeCasting {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return date.format(dtf);
     }
+    //2.LocalDateTime转为"yyyy-MM-dd HH:mm:ss"
+    public static String formatLocalDateTimeStringSe(LocalDateTime date) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return date.format(dtf);
+    }
 
     //3.将"yyyy-MM-dd HH:mm:ss"转化为"yyyy-MM-dd HH:mm"
     public static String formatStringToString(String date) {
@@ -31,6 +39,17 @@ public class TypeCasting {
         }
         return result;
     }
+    public static Date StringToDate(String str) {
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = ft.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     //将list集合转为字符串
     public static <T> String ListToStr(List<T> list) {
         StringBuffer sb = new StringBuffer();

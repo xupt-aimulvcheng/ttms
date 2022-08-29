@@ -15,5 +15,11 @@ public interface PlanService {
     public int getMovieIDByName(String name);
     Double getPriceBymId(Integer id);
 
-    List<Plan> getPlanByName(String getpName);
+    List<Plan> getPlanByName(String pName);
+    List<Plan> getPlanByhName(String hName);
+    boolean belongCalendar(String startDate, String mId,String hName);
+
+    int deletePlan(String ids);
+
+    List<String> getAllTime(String startDate, String endDate);
 }

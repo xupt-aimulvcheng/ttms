@@ -1,5 +1,6 @@
 package com.xupt.ttms.mapper;
 
+import com.xupt.ttms.pojo.Hall;
 import com.xupt.ttms.pojo.Plan;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,11 +17,15 @@ public interface PlanMapper {
 
     int getMovieTimeBymID(@Param("mId") String mId);
 
-    Integer getHallIDByName(@Param("name") String name);
+    Hall getHallIDByName(@Param("name") String name);
 
     int getMovieIDByName(@Param("name") String name);
 
     Double getPriceBymId(@Param("mId") Integer mId);
 
     List<Plan> getPlanByName(@Param("name") String pName);
+
+    int deletePlan(@Param("ids") String ids);
+
+    List<Plan> getPlanByhName(@Param("hName") String hName);
 }

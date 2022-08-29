@@ -32,13 +32,4 @@ public class SeatServiceImpl implements SeatService {
 //        seatMapper.updateTicket(seats);
         return seatMapper.updateSeats(seats);
     }
-    /*@Test
-    public void test() {
-        List<Seat> seats = new ArrayList();
-        seats.add(new Seat(null,12,1,1,1));
-        seats.add(new Seat(null,12,2,8,1));
-        List<Integer> id = seatMapper.getId(seats);
-        String ids = TypeCasting.ListToStr(id);
-        System.out.println(ids);
-    }*/
 }
