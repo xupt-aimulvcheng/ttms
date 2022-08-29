@@ -109,6 +109,10 @@
             height: 36px;
             width: 100%;
         }
+
+        #captchaPic{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -158,6 +162,10 @@
 <script th:src="@{lib/jq-module/jquery.particleground.min.js}" charset="utf-8"></script>
 <script th:src=" @{/static/js/axios.min.js}"></script>
 <script>
+    $("#captchaPic").click(function() {
+        $("#captchaPic").attr("src", "/captcha?Date="+new Date().getTime() )
+    });
+
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer;
@@ -210,7 +218,11 @@
                         $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                         layui.use('layer', function () {
                             var layer = layui.layer;
-                            layer.msg(data, {icon: 2});
+                            layer.msg(data, {
+                                icon: 2,
+                                time: 1500,
+                                end: $("#captchaPic").click()
+                            });
                         });
                         error.innerHTML = data;
                     }

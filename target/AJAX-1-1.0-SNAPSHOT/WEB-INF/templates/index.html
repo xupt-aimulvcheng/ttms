@@ -109,6 +109,10 @@
             height: 36px;
             width: 100%;
         }
+
+        #captchaPic{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -158,6 +162,10 @@
 <script th:src="@{lib/jq-module/jquery.particleground.min.js}" charset="utf-8"></script>
 <script th:src=" @{/static/js/axios.min.js}"></script>
 <script>
+    $("#captchaPic").click(function() {
+        $("#captchaPic").attr("src", "/captcha?Date="+new Date().getTime() )
+    });
+
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer;
@@ -210,7 +218,11 @@
                         $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                         layui.use('layer', function () {
                             var layer = layui.layer;
-                            layer.msg(data, {icon: 2});
+                            layer.msg(data, {
+                                icon: 2,
+                                time: 1500,
+                                end: $("#captchaPic").click()
+                            });
                         });
                         error.innerHTML = data;
                     }
@@ -218,44 +230,6 @@
             )
         })
     })
-    /*axios({
-        // 请求方法
-        method: 'GET',
-        // url
-        url: '/user/login',
-        /!*headers: {
-            'Content-Type': "application/json;charset=UTF-8"
-        },*!/
-        // url参数
-        // 请求体参数
-        data: data,
-    }).then(response => {
-        var data = response.data.info;
-        console.log(data);
-        if (data == "登陆成功") {
-            document.cookie = "username=" + document.getElementById("username").value;
-            $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-            // window.location.href = "user/index.html";
-            layer.msg('登录成功', {
-                icon: 1,
-                time:1500,
-                end:function() {
-                    window.location = "/manage/index";
-                }
-            });
-        }
-        else {
-            $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
-            layui.use('layer', function () {
-                var layer = layui.layer;
-                layer.msg(data, {icon: 2});
-            });
-            error.innerHTML = data;
-        }
-    });
-    return false;
-});
-});*/
 </script>
 </body>
 </html>

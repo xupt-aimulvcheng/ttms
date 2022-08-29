@@ -1,6 +1,7 @@
 package com.xupt.ttms.controller;
 
 import com.ramostear.captcha.HappyCaptcha;
+import com.ramostear.captcha.support.CaptchaType;
 import com.xupt.ttms.pojo.Code;
 import com.xupt.ttms.pojo.User;
 import com.xupt.ttms.service.UserService;
@@ -97,7 +98,7 @@ public class UserServlet {
     //获取验证码
     @GetMapping("/captcha")
     public void happyCaptcha(HttpServletRequest request, HttpServletResponse response) {
-        HappyCaptcha.require(request, response).build().finish();
+        HappyCaptcha.require(request, response).type(CaptchaType.ARITHMETIC).build().finish();
     }
 
 }
