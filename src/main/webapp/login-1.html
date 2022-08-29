@@ -99,10 +99,18 @@
                 layer.msg('验证码不能为空');
                 return false;
             }
-            axios.post(
-                "/user/login",
-                data
-            ).then(response => {
+            axios({
+                // 请求方法
+                method: 'POST',
+                // url
+                url: '/user/login',
+                headers: {
+                    'Content-Type': "application/json;charset=UTF-8"
+                },
+                // url参数
+                // 请求体参数
+                data: data
+            }).then(response => {
                 var data = response.data.info;
                 console.log(data);
                 if (data == "用户不存在") {
