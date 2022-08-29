@@ -84,6 +84,7 @@
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
+            console.log(data);
             $("#login-in").attr("disabled", "disabled").addClass("layui-btn-disabled");
             var error = document.getElementById("error");
             data = data.field;

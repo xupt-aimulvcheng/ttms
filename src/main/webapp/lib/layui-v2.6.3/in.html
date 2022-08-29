@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>树组件</title>
+  <link rel="stylesheet" href="css/layui.css">
+</head>
+<body>
+    <div id="slideTest1"></div>
+  <script src="layui.js"></script>
+  <script>
+  layui.use('slider', function(){
+  var slider = layui.slider;
+  
+  //渲染
+  slider.render({
+    elem: '#slideTest1'  //绑定元素
+  });
+});
+  </script>
+</body>
+</html>

@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" th:src="@{layuimini/css/layui.css"} media="all">
+    <link rel="stylesheet" th:src="@{layuimini/css/layui.css}" media="all">
     <style>
         html, body {width: 100%;height: 100%;overflow: hidden}
         body {background: #1E9FFF;}
@@ -36,12 +36,12 @@
                     <h1>LayuiMini后台登录</h1>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
+                    <label class="layui-icon layui-icon-username"></label>
+                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-icon layui-icon-password" for="password"></label>
-                    <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
+                    <label class="layui-icon layui-icon-password"></label>
+                    <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
                 </div>
                 <!--<div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
@@ -84,6 +84,7 @@
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
+            console.log(data);
             $("#login-in").attr("disabled", "disabled").addClass("layui-btn-disabled");
             var error = document.getElementById("error");
             data = data.field;
@@ -99,10 +100,18 @@
                 layer.msg('验证码不能为空');
                 return false;
             }
-            axios.post(
-                "/user/login",
-                data
-            ).then(response => {
+            axios({
+                // 请求方法
+                method: 'POST',
+                // url
+                url: '/user/login',
+                headers: {
+                    'Content-Type': "application/json;charset=UTF-8"
+                },
+                // url参数
+                // 请求体参数
+                data: data
+            }).then(response => {
                 var data = response.data.info;
                 console.log(data);
                 if (data == "用户不存在") {
