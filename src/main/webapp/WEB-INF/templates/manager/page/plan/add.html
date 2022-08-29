@@ -115,12 +115,22 @@
             });
             return false;
         }
+        function hinterrorStartDate(data) {
+            layer.msg(data, {
+                icon: 1,
+                time: 1000,
+                end: function () {
+                    form.val("formTest", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+                        "startDate": "", // "name": "value"
+                    });
+                }
+            });
+            return false;
+        }
 
         form.on('submit(saveBtn)', function (data) {
-            console.log(data.field);
-            var url = '/plan/addPlan';
             axios.post(
-                url,
+                '/plan/addPlan',
                 data.field
             ).then(function (response) {
                 var data = response.data;
@@ -128,6 +138,8 @@
                     hinterrormName(data);
                 else if (data == "抱歉，该演出计划已存在,请输入正确的数据")
                     hinterrorpName(data);
+                else if (data == "抱歉，设置的时间已有演出计划,请输入正确的数据")
+                    hinterrorStartDate(data);
                 else
                     hint(data);
             })

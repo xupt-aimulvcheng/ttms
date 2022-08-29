@@ -68,6 +68,7 @@
 
     </div>
 </div>
+<script th:src=" @{/static/js/axios.min.js}"></script>
 <script type="text/javascript"  th:inline="none">
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -172,14 +173,22 @@
                     }
 
                     var ids = Arrid.join(",");
-                    var url = '/plan/delete/'+ids;
-                    $.post(url, function (data, status) {
-                        layer.msg(data, {
+                    var url='/plan/delete/'+ids;
+                    axios.post(
+                        url,
+                    ).then(function (response){
+                        var data = response.data;
+                        console.log(data);
+                        layer.msg(response.data, {
                             icon: 1,
                             title: "操作结果"
                         })
                         refresh();
                     })
+                    /*$.post('/plan/delete/'+ids, function (response) {
+                        console.log(response);
+
+                    })*/
                 })
             }
         });

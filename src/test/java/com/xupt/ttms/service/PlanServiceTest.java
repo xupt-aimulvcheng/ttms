@@ -17,7 +17,7 @@ public class PlanServiceTest {
     @Test
     public void belongCalendar() {
         System.out.println(planService.getEndTime("12","2022-05-30 10:19:00"));
-        System.out.println(planService.belongCalendar("2021-06-30 10:16:00","12","409演出厅"));
+        System.out.println(planService.belongCalendar("2022-08-26 14:59:04","12","409演出厅"));
     }
 
 }

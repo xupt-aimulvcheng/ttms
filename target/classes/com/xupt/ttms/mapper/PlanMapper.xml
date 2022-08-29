@@ -67,8 +67,8 @@
     <select id="getMovieTimeBymID" resultType="java.lang.Integer">
         select m_length from movie where id = #{mId}
     </select>
-    <select id="getHallIDByName" resultType="Hall">
-        select id,h_name, from hall where h_name = #{name};
+    <select id="getHallIDByName" resultType="com.xupt.ttms.pojo.Hall">
+        select id,h_name from hall where h_name = #{name};
     </select>
     <select id="getMovieIDByName" resultType="java.lang.Integer">
         select id from movie where m_name = #{name};

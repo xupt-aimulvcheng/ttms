@@ -42,9 +42,10 @@ public class PlanServlet {
     @RequestMapping(value = "/plan/addPlan", method = RequestMethod.POST)
     @ResponseBody
     public String addPlan(@RequestBody Plan plan) {
+        System.out.println(plan.gethName());
         //不在已有的时间内
-        if (!planService.belongCalendar(plan.getStartDate(), String.valueOf(plan.getmId()),plan.gethName())){
-            return "抱歉，设置的时间已有演出计划";
+        if (planService.belongCalendar(plan.getStartDate(), String.valueOf(plan.getmId()),plan.gethName())){
+            return "抱歉，设置的时间已有演出计划,请输入正确的数据";
         }
         if (planService.getHallIDByName(plan.gethName()) == null)
             return "抱歉，无该演出厅,请输入正确的数据";

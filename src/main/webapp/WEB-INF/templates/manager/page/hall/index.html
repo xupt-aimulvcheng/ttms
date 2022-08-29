@@ -174,13 +174,15 @@
                 layer.confirm("您确定要删除" + data.hname + "行么", function (index) {
                     var id = data.id;
                     var url = '/hall/deleteHall/'+ id;
-                    $.post(url, function (data, status) {
-                        console.log(data);
-                        layer.msg(data.info, {
+                    axios.post(
+                        url,
+                    ).then(function (response){
+                        var data = response.data;
+                        layer.msg(response.data, {
                             icon: 1,
-                            title: "操作结果",
-                            end:refresh()
+                            title: "操作结果"
                         })
+                        refresh();
                     })
                 });
             }

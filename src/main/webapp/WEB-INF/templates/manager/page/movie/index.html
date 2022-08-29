@@ -176,12 +176,15 @@
                     }
                     var ids = Arrid.join(",");
                     var url = '/movie/deleteMovie/' + ids;
-                    $.post(url, function (data, status) {
-                        layer.msg(data, {
+                    axios.post(
+                        url,
+                    ).then(function (response){
+                        var data = response.data;
+                        layer.msg(response.data, {
                             icon: 1,
-                            title: "操作结果",
-                            end:refresh()
+                            title: "操作结果"
                         })
+                        refresh();
                     })
                 })
             }

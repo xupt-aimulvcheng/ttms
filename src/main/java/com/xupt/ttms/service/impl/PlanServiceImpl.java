@@ -98,7 +98,7 @@ public class PlanServiceImpl implements PlanService {
      * @param startDate 起始时间
      * @param mId 添加或修改的电影id
      * @param hName 演出计划要放映的位置
-     * @return 不在返回true，在返回false
+     * @return 不在返回false，在返回true
      */
     public boolean belongCalendar(String startDate, String mId,String hName) {
         boolean flag = false;
@@ -117,7 +117,7 @@ public class PlanServiceImpl implements PlanService {
                 begin.setTime(beginTime);
                 Calendar end = Calendar.getInstance();
                 end.setTime(endTime);
-                if (!(date.after(begin) && date.before(end))) {
+                if (date.after(begin) && date.before(end)) {
                     flag = true;
                 }
             }
