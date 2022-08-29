@@ -25,11 +25,13 @@ public class PlanServlet extends BaseServlet {
 
     @RequestMapping(value = "/plan/getAllPlan")
     @ResponseBody
-    public Result getAllPlan(@RequestParam("page") int pageNum, @RequestParam("limit") int pageSize, @RequestParam("id") int id) {
-        PageInfo<Plan> plans = planService.getAllPlansBymID(String.valueOf(id), pageNum, pageSize);
+    public Result getAllPlan(@RequestParam("page") int pageNum, @RequestParam("limit") int pageSize, @RequestParam("id") int id, @RequestBody Plan plan) {
+        PageInfo<Plan> plans = planService.getAllPlansBymID(String.valueOf(id), pageNum, pageSize,plan.getStartDate(),plan.getEndDate(),plan.getpName());
         Result result = ToResult.getResult(plans);
         return result;
     }
+
+
 
     @RequestMapping(value = "/plan/addPlan", method = RequestMethod.POST)
     @ResponseBody

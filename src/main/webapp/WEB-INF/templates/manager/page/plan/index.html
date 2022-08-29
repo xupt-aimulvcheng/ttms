@@ -140,12 +140,6 @@
                     shadeClose: true,
                     area: ['100%', '100%'],
                     content: '/plan/plan_index?id='+ data.id,
-                    success: function () {
-                        //表单数据回显
-                        form.val("scoreRuleForm", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
-
-                        });
-                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

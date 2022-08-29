@@ -12,7 +12,7 @@ public interface PlanMapper {
 
     int insert(@Param("plan") Plan plan);
 
-    List<Plan> getAllPlansBymID(@Param("mId") String mId);
+    List<Plan> getAllPlansBymID(@Param("mId") String mId, @Param("startDate") String startDate, @Param("endDate") String endDate,@Param("pName") String pName);
 
     int getMovieTimeBymID(@Param("mId") String mId);
 

@@ -50,6 +50,16 @@
                (select h_name from hall where id in (select h_id from plan where m_id = #{mId})) as h_name
         from plan
         where m_id = #{mId}
+        <if test="startDate!= null||startDate!= ''">
+            and p_startTime &lt;=#{startDate}
+        </if>
+        <if test="endDate!= null||endDate!= ''">
+            and p_endTime>=#{endDate}
+        </if>
+        <if test="pName!= null||pName!= ''">
+            and p_name like concat('%',#{pName},'%')
+        </if>
+
     </select>
     <select id="getMovieTimeBymID" resultType="java.lang.Integer">
         select m_length from movie where id = #{mId}

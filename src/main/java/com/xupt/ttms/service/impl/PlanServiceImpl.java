@@ -68,9 +68,9 @@ public class PlanServiceImpl implements PlanService {
         return planMapper.deletePlanByIds(ids);
     }
 
-    public PageInfo<Plan> getAllPlansBymID(String mId, int pageNum, int PageSize) {
+    public PageInfo<Plan> getAllPlansBymID(String mId, int pageNum, int PageSize, String startDate,String endDate,String pName) {
         Page<Plan> Movies = PageHelper.startPage(pageNum, PageSize);
-        List<Plan> plans = planMapper.getAllPlansBymID(mId);
+        List<Plan> plans = planMapper.getAllPlansBymID(mId,startDate,endDate,pName);
         for (int i = 0; i < plans.size(); i++) {
             Plan plan = plans.get(i);
             plan.setEndDate(getEndTime(mId, plan.getStartDate()));

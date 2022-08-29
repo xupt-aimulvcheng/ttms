@@ -6,7 +6,7 @@ import com.xupt.ttms.pojo.Plan;
 import java.util.List;
 
 public interface PlanService {
-    PageInfo<Plan> getAllPlansBymID(String mId, int parseInt, int parseInt1);
+    PageInfo<Plan> getAllPlansBymID(String mId, int parseInt, int parseInt1, String startDate,String endDate, String pName);
     public String getEndTime(String mId, String startTime);
     public int insertPlan(Plan plan);
     public int updatePlan(Plan plan);

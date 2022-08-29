@@ -34,6 +34,8 @@
     <mvc:annotation-driven/>
     <!-- 配置访问首页的视图控制 -->
     <mvc:view-controller path="/" view-name="index"></mvc:view-controller>
+    <mvc:view-controller path="/register" view-name="register"></mvc:view-controller>
+    <mvc:view-controller path="/forget-pw" view-name="forget-pw"></mvc:view-controller>
     <mvc:view-controller path="/manage/index" view-name="manager/index"></mvc:view-controller>
     <mvc:view-controller path="/hall/index" view-name="manager/page/hall/index"></mvc:view-controller>
     <mvc:view-controller path="/hall/add" view-name="manager/page/hall/add"></mvc:view-controller>

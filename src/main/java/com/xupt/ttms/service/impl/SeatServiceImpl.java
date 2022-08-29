@@ -29,7 +29,8 @@ public class SeatServiceImpl implements SeatService {
             Integer id = seatMapper.getId(seats.get(i));
             seats.get(i).setId(id);
         }
-        return seatMapper.updateSeats(seats)+seatMapper.updateTicket(seats);
+//        seatMapper.updateTicket(seats);
+        return seatMapper.updateSeats(seats);
     }
     /*@Test
     public void test() {

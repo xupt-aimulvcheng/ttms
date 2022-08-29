@@ -20,6 +20,12 @@
                 <form class="layui-form layui-form-pane" action="" id="searchForm">
                     <div class="layui-form-item">
                         <div class="layui-inline">
+                            <label class="layui-form-label">演出计划名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
                             <label class="layui-form-label">日期范围</label>
                             <div class="layui-inline" id="Date">
                                 <div class="layui-input-inline">
@@ -104,6 +110,7 @@
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 195, title: '编号', sort: true},
                 {field: 'pName', width: 222, title: '演出计划名称'},
+                {field: 'hName', width: 222, title: '演出位置'},
                 {field: 'mName', width: 222, title: '电影名称'},
                 {field: 'price', width: 200, title: '价格', sort: true},
                 {field: 'startDate', width: 200, title: '开始日期', sort: true},
@@ -128,8 +135,7 @@
                 , where: {
                     startDate: data.field.startDate,
                     endDate: data.field.endDate,
-                    name: data.field.name,
-                    status: data.field.status
+                    name: data.field.name
                 }
             });
             return false;
