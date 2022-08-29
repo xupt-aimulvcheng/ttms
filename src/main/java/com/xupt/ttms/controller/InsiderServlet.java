@@ -9,7 +9,7 @@ import com.xupt.ttms.service.InsiderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 @Controller
-public class InsiderServlet extends BaseServlet{
+public class InsiderServlet {
     @Autowired
     private InsiderService insiderService;
 }

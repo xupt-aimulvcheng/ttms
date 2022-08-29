@@ -19,7 +19,7 @@ import javax.servlet.annotation.WebServlet;
 
 @Controller
 @WebServlet("/planServlet")
-public class PlanServlet extends BaseServlet {
+public class PlanServlet {
     @Autowired
     private PlanService planService;
 

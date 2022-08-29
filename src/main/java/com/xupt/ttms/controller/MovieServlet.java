@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Controller
-public class MovieServlet extends BaseServlet {
+public class MovieServlet {
     @Autowired
     private MovieService movieService;
 
