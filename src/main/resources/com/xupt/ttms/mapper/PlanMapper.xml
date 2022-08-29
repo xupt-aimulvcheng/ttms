@@ -50,13 +50,13 @@
                (select h_name from hall where id in (select h_id from plan where m_id = #{mId})) as h_name
         from plan
         where m_id = #{mId}
-        <if test="startDate!= null||startDate!= ''">
+        <if test="startDate!= null and startDate!= ''">
             and p_startTime &lt;=#{startDate}
         </if>
-        <if test="endDate!= null||endDate!= ''">
+        <if test="endDate!= null and endDate!= ''">
             and p_endTime>=#{endDate}
         </if>
-        <if test="pName!= null||pName!= ''">
+        <if test="pName!= null and pName!= ''">
             and p_name like concat('%',#{pName},'%')
         </if>
 

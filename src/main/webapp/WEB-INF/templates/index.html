@@ -136,7 +136,7 @@
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="text" name="captcha" id="captcha" lay-verify="required|captcha" placeholder="图形验证码"
-                           autocomplete="off" class="layui-input verification captcha" value="xszg">
+                           autocomplete="off" class="layui-input verification captcha">
                     <div class="captcha-img">
                         <img id="captchaPic" th:src="@{/captcha}">
                     </div>
@@ -185,7 +185,6 @@
         form.on('submit(login)', function (data) {
             $("#login-in").attr("disabled", "disabled").addClass("layui-btn-disabled");
             data = data.field;
-            console.log(data);
             if (data.username == '') {
                 layer.msg('用户名不能为空');
                 return false;

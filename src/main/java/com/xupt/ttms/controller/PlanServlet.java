@@ -23,14 +23,14 @@ public class PlanServlet {
     @Autowired
     private PlanService planService;
 
-    @RequestMapping(value = "/plan/getAllPlan")
+    @RequestMapping(value = "/plan/getAllPlan", method = RequestMethod.GET)
     @ResponseBody
-    public Result getAllPlan(@RequestParam("page") int pageNum, @RequestParam("limit") int pageSize, @RequestParam("id") int id, @RequestBody Plan plan) {
-        PageInfo<Plan> plans = planService.getAllPlansBymID(String.valueOf(id), pageNum, pageSize,plan.getStartDate(),plan.getEndDate(),plan.getpName());
+    public Result getAllPlan(@RequestParam("page") int pageNum, @RequestParam("limit") int pageSize, @RequestParam("id") int id,
+                             @RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate, @RequestParam(value = "name", required = false) String name) {
+        PageInfo<Plan> plans = planService.getAllPlansBymID(String.valueOf(id), pageNum, pageSize, startDate, endDate, name);
         Result result = ToResult.getResult(plans);
         return result;
     }
-
 
 
     @RequestMapping(value = "/plan/addPlan", method = RequestMethod.POST)
