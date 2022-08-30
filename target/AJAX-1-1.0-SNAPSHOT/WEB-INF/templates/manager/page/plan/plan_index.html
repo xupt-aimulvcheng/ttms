@@ -173,9 +173,9 @@
                     }
 
                     var ids = Arrid.join(",");
-                    var url;
+                    var url='/plan/delete/'+ids;
                     axios.post(
-                        '/plan/delete/'+ids,
+                        url,
                     ).then(function (response){
                         var data = response.data;
                         console.log(data);

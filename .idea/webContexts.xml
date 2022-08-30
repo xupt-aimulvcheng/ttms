@@ -10,6 +10,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/hall/index.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/hall" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/movie/add.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/movie" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/movie/index.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/movie" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/sales/index.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/sales" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/seat/seat_index.html" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/templates/manager/page/seat" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/login-1.html" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>

@@ -55,7 +55,7 @@
           "child": [
             {
               "title": "票房统计",
-              "href": "page/sales/index.html",
+              "href": "/sales/index",
               "icon": "fa fa-hourglass-end",
               "target": "_self"
             }
