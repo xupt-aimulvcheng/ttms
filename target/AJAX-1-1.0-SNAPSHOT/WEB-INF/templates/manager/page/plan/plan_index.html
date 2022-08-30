@@ -68,6 +68,7 @@
 
     </div>
 </div>
+<script th:src=" @{/static/js/axios.min.js}"></script>
 <script type="text/javascript"  th:inline="none">
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -147,7 +148,7 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加演出厅',
+                    title: '添加演出演出计划',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
@@ -170,16 +171,24 @@
                     for (var i = 0; i < data.length; i++) {
                         Arrid.push(data[i].id);
                     }
-                    var url = '../../../movieServlet';
+
                     var ids = Arrid.join(",");
-                    var date = "action=deleteMovie&ids=" + ids;
-                    $.post(url, date, function (data, status) {
-                        layer.msg(data, {
+                    var url;
+                    axios.post(
+                        '/plan/delete/'+ids,
+                    ).then(function (response){
+                        var data = response.data;
+                        console.log(data);
+                        layer.msg(response.data, {
                             icon: 1,
                             title: "操作结果"
                         })
                         refresh();
                     })
+                    /*$.post('/plan/delete/'+ids, function (response) {
+                        console.log(response);
+
+                    })*/
                 })
             }
         });

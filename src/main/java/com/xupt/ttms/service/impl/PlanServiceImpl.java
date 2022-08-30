@@ -117,7 +117,7 @@ public class PlanServiceImpl implements PlanService {
                 begin.setTime(beginTime);
                 Calendar end = Calendar.getInstance();
                 end.setTime(endTime);
-                if (date.after(begin) && date.before(end)) {
+                if (date.after(begin) && date.before(end)) { //在中间
                     flag = true;
                 }
             }
