@@ -27,6 +27,14 @@
             </bean>
         </property>
     </bean>
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
 
     <!-- 配置默认的servlet处理静态资源 -->
     <mvc:default-servlet-handler/>

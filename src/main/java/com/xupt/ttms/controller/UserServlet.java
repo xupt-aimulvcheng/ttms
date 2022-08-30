@@ -54,9 +54,9 @@ public class UserServlet {
         return code;
     }
 
-    @RequestMapping(value = "/user/checkUserName", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/checkUserName/{username}", method = RequestMethod.POST)
     @ResponseBody
-    public Code checkUserName(@RequestBody String username) {
+    public Code checkUserName(@PathVariable("username") String username) {
         String error = "";
         if (userService.getUserByUsername(username) != null) {
             error += "用户名已存在";

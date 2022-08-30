@@ -169,7 +169,7 @@ public class PlanServiceImpl implements PlanService {
         for (int i = 0; i < plans.size(); i++) {
             Plan plan = plans.get(i);
             plan.setEndDate(getEndTime(mId, plan.getStartDate()));
-            plan.setStartDate(TypeCasting.formatStringToString(plan.getStartDate()));
+            plan.setStartDate(/*TypeCasting.formatStringToString(*/plan.getStartDate());
         }
         PageInfo<Plan> planInfo = new PageInfo(plans, 5);
         return planInfo;
