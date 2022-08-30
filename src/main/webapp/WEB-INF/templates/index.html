@@ -206,6 +206,7 @@
                         document.cookie = "username=" + document.getElementById("username").value;
                         $("#login-in").removeAttr("disabled", "disabled").removeClass("layui-btn-disabled");
                         // window.location.href = "user/index.html";
+                        error.innerHTML="";
                         layer.msg('登录成功', {
                             icon: 1,
                             time: 1500,
