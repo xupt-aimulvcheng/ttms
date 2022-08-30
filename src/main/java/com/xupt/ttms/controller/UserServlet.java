@@ -85,6 +85,10 @@ public class UserServlet {
     @RequestMapping(value = "/user/forgetPassword", method = RequestMethod.POST)
     @ResponseBody
     public Code forgetPassword(@RequestBody User user) {
+        if (userService.getUserByUsernameAndPwd(user.getUsername(), user.getPassword())!=null){
+            code.setInfo("新密码不能与原密码一致，请重新输入");
+            return code;
+        }
         int i = userService.updateUserByUsernameAndPhone(user.getUsername(), user.getPassword(), user.getPhone());
         if (i < 1) {
             code.setInfo("预留手机号输入有误，请重新输入");

@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/static/css/register.css}">
     <script th:src=" @{/static/js/axios.min.js}"></script>
     <script th:src="@{/layuimini/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
+    <script th:src="@{/static/js/jquery-2.1.3.min.js}" charset="utf-8"></script>
     <script>
         window.onload = function () {
             layui.use(['form'], function () {
@@ -25,6 +26,10 @@
                             if (data=="用户名已存在") {
                                 errer.innerHTML = data;
                             }
+                            else {
+                                errer.innerHTML = "";
+                                document.getElementById("error1").innerHTML = "";
+                            }
                         })
                     }
                     vpwd.onblur = function () {
@@ -32,6 +37,7 @@
                             errer.innerHTML = "两次输入的密码不一致，请检查";
                         } else {
                             errer.innerHTML = "";
+                            document.getElementById("error1").innerHTML = "";
                         }
                     }
                     phone.onblur = function () {
@@ -41,6 +47,7 @@
                             errer.innerHTML = "手机号码输入有误，请检查";
                         } else {
                             errer.innerHTML = "";
+                            document.getElementById("error1").innerHTML = "";
                         }
                     }
                     document.getElementById("bu1").onclick = function () {
@@ -57,19 +64,21 @@
                             "password": pwd.value,
                             "phone": phone.value
                         }
-                        axios.post(
-                            '/user/register',
-                            data
-                        ).then(function (response) {
-                            var data = response.data.info;
-                            layer.msg(data, {
-                                icon: 1,
-                                time: 1500,
-                                end: function () {
-                                    window.location = "/";
-                                }
-                            });
-                        })
+                        if($("#error1").text()==""&&$("#error").text()=="") {
+                            axios.post(
+                                '/user/register',
+                                data
+                            ).then(function (response) {
+                                var data = response.data.info;
+                                layer.msg(data, {
+                                    icon: 1,
+                                    time: 1500,
+                                    end: function () {
+                                        window.location = "/";
+                                    }
+                                });
+                            }
+                        )}
                     }
                 }
             )
