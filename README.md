@@ -33,11 +33,13 @@ cd ttms
 mvn install
 
 # ttms-vue
-```bash
+
 # clone the repository
 git clone https://gitee.com/cx3262881792/vue-ttms.git
+
 # navigate into the repository
 cd ttms-vue
+
 ## Project setup
 npm install
 
