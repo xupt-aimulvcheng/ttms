@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xupt.ttms.mapper.OrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.xupt.ttms.pojo.Order">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="orderNo" column="order_no" jdbcType="VARCHAR"/>
+            <result property="oStatus" column="o_status" jdbcType="INTEGER"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="des" column="des" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="generateTime" column="generate_time" jdbcType="TIMESTAMP"/>
+            <result property="purchaseTime" column="purchase_time" jdbcType="TIMESTAMP"/>
+            <result property="expireTime" column="expire_time" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+            <result property="mId" column="m_id" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="getOrders" type="com.xupt.ttms.pojo.Order">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="des" column="des"></result>
+        <result property="amount" column="amount"></result>
+        <result property="oStatus" column="o_status"></result>
+        <result property="orderNo" column="order_no"></result>
+        <result property="mId" column="m_id"></result>
+        <result property="pId" column="p_id"></result>
+        <result property="mImage" column="m_image"></result>
+        <result property="generateTime" column="generate_time"></result>
+        <result property="expireTime" column="expire_time"></result>
+        <result property="purchaseTime" column="purchase_time"></result>
+        <result property="startDate" column="p_startTime"></result>
+        <result property="hName" column="h_name"></result>
+        <result column="m_name" property="mName"></result>
+        <result property="isDelete" column="is_delete"></result>
+        <collection property="seats" javaType="java.util.ArrayList" ofType="com.xupt.ttms.pojo.Seat">
+            <id column="s_id" property="id"></id>
+            <result property="seatRow" column="seat_row"></result>
+            <result property="seatColumn" column="seat_column"></result>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_no,o_status,
+        amount,des,user_id,
+        generate_time,purchase_time,expire_time,
+        is_delete,m_id
+    </sql>
+    <select id="getAmountByMid" resultType="java.math.BigDecimal">
+        SELECT amount from t_order where id in (
+            SELECT DISTINCT order_id FROM ticket WHERE plan_id in (
+                SELECT id from plan WHERE m_id = #{mId}
+            ) AND ISNULL(order_id) = 0
+        );
+    </select>
+    <select id="getmId" resultType="java.lang.Integer">
+        select m.id as mId from movie m
+                                    inner join plan p on m.id = p.m_id
+                                    inner join ticket t on p.id = t.plan_id and t.order_id is not null
+                                    inner join t_order o on t.order_id = #{orderId}
+        group by m.id
+    </select>
+    <select id="getOrderDetail" resultMap="getOrders">
+        SELECT m.m_name,
+               m.m_image,
+               p.p_startTime,
+               m.id as m_id,
+               p.id as p_id,
+               o.generate_time,
+               o.purchase_time,
+               o.amount,
+               h.h_name,
+               o.o_status,
+               o.id,
+               o.order_no,
+               o.user_id,
+               o.expire_time
+        from t_order o
+                 LEFT JOIN ticket t
+                           on (t.order_id = o.id)
+                 LEFT JOIN plan p
+                           ON (p.id = t.plan_id)
+                 LEFT JOIN movie m
+                           on (p.m_id = m.id)
+                 LEFT JOIN seat s
+                           on (t.seat_id = s.id)
+                 LEFT JOIN hall h
+                           on (p.h_id = h.id)
+        where o.id = #{orderId} and o.is_delete = 0
+        GROUP BY o.id
+    </select>
+    <select id="searchAllByUserId" resultMap="getOrders">
+        SELECT m.m_name,
+               m.m_image,
+               m.id as m_id,
+               p.id as p_id,
+               p.p_startTime,
+               o.generate_time,
+               o.purchase_time,
+               o.amount,
+               h.h_name,
+               o.o_status,
+               o.id,
+               o.order_no
+        from t_order o
+                 LEFT JOIN ticket t
+                           on (t.order_id = o.id)
+                 LEFT JOIN plan p
+                           ON (p.id = t.plan_id)
+                 LEFT JOIN movie m
+                           on (p.m_id = m.id)
+                 LEFT JOIN seat s
+                           on (t.seat_id = s.id)
+                 LEFT JOIN hall h
+                           on (p.h_id = h.id)
+        where user_id = #{userId,jdbcType=NUMERIC} and o.is_delete = 0
+        ORDER BY o.generate_time desc
+    </select>
+    <select id="selectByPrimaryKey" resultMap="getOrders">
+        SELECT m.m_name,
+               m.m_image,
+               m.id as m_id,
+               p.id as p_id,
+               p.p_startTime,
+               o.generate_time,
+               o.purchase_time,
+               o.amount,
+               h.h_name,
+               o.o_status,
+               o.id,
+               o.order_no,
+               o.expire_time
+        from t_order o
+                 LEFT JOIN ticket t
+                           on (t.order_id = o.id)
+                 LEFT JOIN plan p
+                           ON (p.id = t.plan_id)
+                 LEFT JOIN movie m
+                           on (p.m_id = m.id)
+                 LEFT JOIN seat s
+                           on (t.seat_id = s.id)
+                 LEFT JOIN hall h
+                           on (p.h_id = h.id)
+        where o.id = #{id} and o.is_delete = 0
+    </select>
+    <select id="dailyBoxOfficeStats" resultType="java.util.Map">
+        SELECT m_id, amount,m.m_name
+        FROM t_order
+        left join movie m on t_order.m_id = m.id
+        WHERE DATE (purchase_time) = CURDATE() AND o_status IN (1, 2)
+    </select>
+    <select id="getOrderAmount" resultType="java.math.BigDecimal">
+        <![CDATA[
+        SELECT amount
+            FROM t_order
+            WHERE DATE(generate_time) = CURDATE()
+        AND
+            o_status IN (1, 2)
+        ]]>
+    </select>
+</mapper>

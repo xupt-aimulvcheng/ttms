@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xupt.ttms.mapper.VideoMapper">
+
+    <resultMap id="BaseResultMap" type="com.xupt.ttms.pojo.Video">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="des" column="des" jdbcType="VARCHAR"/>
+            <result property="mId" column="m_id" jdbcType="INTEGER"/>
+            <result property="vSrc" column="v_src" jdbcType="VARCHAR"/>
+            <result property="iSrc" column="i_src" jdbcType="VARCHAR"/>
+            <result property="len" column="len" jdbcType="INTEGER"/>
+            <result property="watchNum" column="watch_num" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,des,m_id,
+        v_src,i_src,len,
+        watch_num,create_time,update_time,
+        is_deleted
+    </sql>
+</mapper>

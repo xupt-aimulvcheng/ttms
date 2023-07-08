@@ -1,0 +1,85 @@
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    #    打印出sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+spring:
+  rabbitmq:
+    host: 43.139.139.105
+    username: admin
+    password: admin
+    port: 5672
+    virtual-host: /
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://43.139.139.105:3306/ttms?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&allowPublicKeyRetrieval=true
+      username: root
+      password: root
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,wall,log4j2
+      initial-size: 10
+      log-abandoned: true
+      max-active: 200
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 6000
+      min-evictable-idle-time-millis: 300000
+      min-idle: 5
+      pool-prepared-statements: true
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1 FROM DUAL
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  redis:
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 1ms
+        min-idle: 0
+        max-idle: 8
+    host: 43.139.139.105
+    password: cx3262881792
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+cache:
+  redis:
+      time-to-live: 3600000
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+oos:
+  endpoint: oss-cn-hangzhou.aliyuncs.com
+  accessKeyId: LTAI5tLWoVwq84TpC4iCEFVx
+  accessKeySecret: rqhciDb7ixYQWHw21vT46TAjOrzLEh
+  bucketName: ttmsxu
+server:
+  port: 6329
+alipay:
+  app-id: 2016102100734823
+  seller-id: 2088102180570093
+  gateway-url: https://openapi.alipaydev.com/gateway.do
+  merchant-private-key: MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCRlN6oneHuUieGmNdG5Cd4bU/uqTWo/XKfMFx6M2m9M5LUQvBvTeJ7fm8SAaG/ie6x0iARoN7MmIyCZJ/QjllZe0i1BcFJviVWKCGz8snQtXClqsaa2vPecSORarEp1f20+/EjW4eq8/5pcP/Yn5hZP4lcFBfb2tfK3Czl6iHsiLuWNhn3pNXmhb8CvmditgqM+lQP/6wKk2SmlAeTVWcHwz46CYyHvewTdNbIsQFDoB0iYic9c9bF5v585yERX878+EdAbLNBTX4GjZ/Z/3LCeP8kT63eOhgQZ3y1UXv2gcshAiEe/MeXx/u4oc+bDcuSe4628LlEzUuEWYMEjSzDAgMBAAECggEAMD3JrsxqssOMj4CUTcyK+9AVXbu6qV4bHn8zFdd1oZm2fRoVfHytoUibW7cot0To0QoVUGIjkl62qPrZLo4NM6azyDC5BUu6KZuw12WL1NpbErrNh0Eo8LxDEgvt2zQrF08pcBMDmPWzh5NHZKw2GtUAGoAaC+OwAGwHgMSeKzf/ZggqSdItAna2BNYK8S6W5ZDDw7cydkfgGy5/GjIojgrq59YauwWbIzUGsxdwoqcrBj5o1XMmalNU1SXPcTX4f8AQ08vI1hCS2o/lovartctqfgNg0eb7Vcztsq57gr/lDW7rMYpc0X9D9VTUJsE9AYA8mLDEMQt4DLW7jqPqyQKBgQDXNCgRFSdRbVgQnDf6Oe61ICXaDK+t1YiH2W3/6p2TgDKFmMZruH2x1Cgh4QGex7GNEq1SopD+6Qvnwih+QeDb1/sTtEwgnxpGfNsKxZujOJXx5pCNYTwSlkvL0BInEuhW2ryIRAHZsDKOqC03wz7Tk0IsF+hW8XJrsrZwTnWdjwKBgQCtLfH5ubvUsefU58qla7doPKgLMzgn0zKzjfIr0QSm0LdQ0+Q9Z+DBL8vmeOBR5bU6zkEYUSP8PCEhl6TrXYxYKL4m/qn9ZjfHpQNpCpQiMMquu1Nf8JNxezCGvALGPV8/VKpUd8EIwmQ9unntasDKZGvZOJ1EljJqsPOR+FvLjQKBgHIXk7pixaKU3uCHgeHmftiF/6tXmHgHwkeLjZblEr+VcrODaIbJm9IAkXpMqSg95LLPGRa7WzXZ5dbsB73QPV8wZUtwBgAxeaOvJA3U8Aubv1stCqv5xfhwuCSI3mbazlTlyJhRvc1kbZlWLgrnN1LCOo3X6vTVMv1IFRL7db2fAoGAO9Cev05znedE17inubMWyh4JPLUYNEkyPepNNu0e2i9E4doN/1edvZwwpQ4jDKZ2jjUnLqr37usl1mB2SgUpsFmCNB3JwQhJQ9+u6d0JhTWtC+UPyxdhFdUi0aamnqob99fabQpf1hKuZNO/wU0aAc3lokV3rHTkPQ2ZU1Wg/xECgYBa4F92VoIGD3jRPJ7ot2Z79/PmOs5nvmNi4YZUC0hwPpDXHH2o4slpVJkSXjRhyapYSgRHrs57BwuInPHiIICOn0BdcZD6ijYZ54DLMoA2y8U3V9c1BbHKItaTu/WLqWvavPGIFlXEfZD9e1tGqTajzfyKgQnS9r65Wv4O/i1E8g==
+  public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmZSIc9KuAWs85xMt7+4dbcNJGUcTs1Dv7sN2ONqoxdd66d/OTkvG7YOr+3B2KegER8cIqs1XSaMHX1jS9+wksPrwEyt2qHZYNbZ8+APgrIj3kvndG//gFX8o4gMQ5dxxTT6bHBl38VMqhVV71383RRlw3lEXXOMh3vyhlaJwtnpr+qyvGYJkbT6HXppcVdYkgwF4DH5YuzZ6PMmT0O8m+a13ZTkDPrrA0WZ//6nt9Efsqzk2kN5tWYDqHg6AY9bDD9MgnpDL07NyfP+fodq/ZlTzStQf7GqgR8FszMWljJxzw9jO9bJHsMB14tV3SrHm+05lnRZXIk91y1SAcmvciwIDAQAB
+  content-key: iFZS0gl/gWtvBafP+JzR4g==
+  notify_url: http://43.139.139.105:6329/alipay/alipay
+  charset: utf-8
+  sign_type: RSA2
+  return_url: http://43.139.139.105:80/film
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xupt.ttms.mapper.TicketMapper">
+
+    <resultMap id="BaseResultMap" type="com.xupt.ttms.pojo.Ticket">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="seatId" column="seat_id" jdbcType="INTEGER"/>
+        <result property="planId" column="plan_id" jdbcType="INTEGER"/>
+        <result property="ticketPrice" column="ticket_price" jdbcType="DECIMAL"/>
+        <result property="ticketStatus" column="ticket_status" jdbcType="SMALLINT"/>
+        <result property="ticketLocktime" column="ticket_locktime" jdbcType="TIMESTAMP"/>
+        <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result column="seat_column" property="seatColumn"></result>
+        <result column="seat_row" property="seatRow"></result>
+        <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,seat_id,plan_id,
+        ticket_price,ticket_status,ticket_locktime,
+        order_id,create_time,update_time,
+        is_deleted
+    </sql>
+    <update id="updateOrderId">
+        <foreach collection="seats" item="seat" separator=";">
+            update ticket set order_id = #{orderId}
+            where plan_id in (#{pId}) and seat_id in (select id from seat where seat_row = #{seat.seatRow} and seat_column =
+            #{seat.seatColumn})
+        </foreach>
+    </update>
+    <update id="update">
+        <foreach collection="seats" item="seat" separator=";">
+            <if test="i == 2">
+                update ticket set ticket_status = #{i},ticket_locktime = now()
+                where   plan_id in (#{pId}) and seat_id in (select id from seat where seat_row = #{seat.seatRow} and seat_column = #{seat.seatColumn})
+            </if>
+            <if test="i == 1">
+                update ticket set ticket_status = #{i},ticket_locktime = null
+                where   plan_id in (#{pId}) and seat_id in (select id from seat where seat_row = #{seat.seatRow} and seat_column = #{seat.seatColumn})
+            </if>
+        </foreach>
+    </update>
+    <select id="getTicketsByPId" resultMap="BaseResultMap">
+        SELECT t.id, t.seat_id, t.plan_id, t.ticket_price, t.ticket_status, t.ticket_locktime,
+               s.seat_column, s.seat_row
+        FROM ticket t
+                 INNER JOIN seat s ON s.id = t.seat_id
+        WHERE t.plan_id IN (#{pId})
+    </select>
+
+</mapper>

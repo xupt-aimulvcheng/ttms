@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xupt.ttms.mapper.MovieMapper">
+
+    <resultMap id="BaseResultMap" type="com.xupt.ttms.pojo.Movie">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="mName" column="m_name" jdbcType="VARCHAR"/>
+            <result property="mLength" column="m_length" jdbcType="INTEGER"/>
+            <result property="mDate" column="m_date" jdbcType="DATE"/>
+            <result property="mDirector" column="m_director" jdbcType="VARCHAR"/>
+            <result property="mActor" column="m_actor" jdbcType="VARCHAR"/>
+            <result property="mScore" column="m_score" jdbcType="INTEGER"/>
+            <result property="mIntroduction" column="m_introduction" jdbcType="VARCHAR"/>
+            <result property="mImage" column="m_image" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="DATE"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,m_name,
+        m_length,m_date,m_director,
+        m_actor,m_box_office,m_score,
+        m_introduction,m_image,status,
+        create_time,update_time,is_deleted
+    </sql>
+    <select id="getTypesById" resultType="com.xupt.ttms.pojo.MovieType">
+        select mt.id, mt.name
+        FROM movie_type mt
+        where mt.id in (select type_id from movie_type_relation where movie_id = #{id});
+    </select>
+    <select id="getMovedata" resultType="com.xupt.ttms.pojo.Movie">
+        select m_actor,status,m_date,m_director,m_image,m_introduction,m_length,m_name,movie.id
+        from movie
+                 left join movie_type_relation mtr on movie.id = mtr.movie_id
+                 left join movie_type mt on mtr.type_id = mt.id
+        where movie.is_deleted = 0  and movie.status = #{status} and mt.id = #{typeId}
+    </select>
+</mapper>

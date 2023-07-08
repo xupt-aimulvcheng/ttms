@@ -1,0 +1,9 @@
+mail:
+    from:
+        address: 3262881792@qq.com
+        nickname: \u7231\u6155\u65c5\u7a0b
+        smtp:
+            pwd: ndpftnzhpvmgciha
+    smtp:
+        port: 587
+        service: smtp.qq.com
