@@ -1,8 +1,8 @@
 spring:
     mail:
         host: smtp.qq.com  # 邮件服务器主机名
-        username: cx3262881792@gmail.com  # 邮箱账号
-        password: CXEWas123  # 邮箱授权码
+        username:   # 邮箱账号
+        password:   # 邮箱授权码
         port: 587  # 端口号
         protocol: smtp  # 发送协议，这里使用smtp协议
         properties:
@@ -18,8 +18,8 @@ spring:
                         protocol: TLSv1.2
             test-connection: true
 qq-mail:
-    address: 3262881792@qq.com
-    nickname: 爱慕旅程
-    pwd: ndpftnzhpvmgciha
-    port: 587
+    address: 
+    nickname: 
+    pwd: 
+    port: 
     service: smtp.qq.com
